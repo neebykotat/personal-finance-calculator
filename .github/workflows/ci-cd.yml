@@ -1,4 +1,4 @@
-name: CI/CD Pipeline
+name: CI/CD Pipeline with Docker and Linter
 
 on:
   push:
@@ -6,16 +6,15 @@ on:
       - main
 
 jobs:
-  build-and-deploy:
-    name: Test and Deploy
+  test-and-lint:
+    name: Lint Code and Run Tests
     runs-on: self-hosted
     steps:
       - name: Update code via Git
         run: |
           cd /home/user
-
           if [ ! -d "myapp" ]; then
-            git clone https://github.com/neebykotat/personal-finance-calculator.git myapp
+            git clone https://github.com myapp
           else
             cd myapp
             git pull origin main
@@ -28,8 +27,33 @@ jobs:
           source .venv/bin/activate
           pip install -r requirements.txt
 
+      - name: Run Linter (Flake8)
+        run: |
+          cd /home/user/myapp
+          source .venv/bin/activate
+          # Проверяем стиль кода, исключая кэш и виртуальное окружение
+          flake8 . --exclude=.git,__pycache__,.venv,tests
+
       - name: Run tests
         run: |
           cd /home/user/myapp
           source .venv/bin/activate
           pytest -v
+
+  build-docker:
+    name: Build Docker Image and Deploy
+    needs: test-and-lint
+    runs-on: self-hosted
+    steps:
+      - name: Build Docker Image
+        run: |
+          cd /home/user/myapp
+          docker build -t finance-app:latest .
+
+      - name: Run Application in Docker Container
+        run: |
+          docker stop finance-container || true
+          docker rm finance-container || true
+
+          docker run -d --name finance-container -it finance-app:latest
+
