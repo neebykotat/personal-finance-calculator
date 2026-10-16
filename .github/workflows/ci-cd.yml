@@ -14,7 +14,7 @@ jobs:
         run: |
           cd /home/user
           if [ ! -d "myapp" ]; then
-            git clone https://github.com myapp
+            git clone https://github.com/neebykotat/personal-finance-calculator.git myapp
           else
             cd myapp
             git pull origin main
@@ -31,7 +31,6 @@ jobs:
         run: |
           cd /home/user/myapp
           source .venv/bin/activate
-          # Проверяем стиль кода, исключая кэш и виртуальное окружение
           flake8 . --exclude=.git,__pycache__,.venv,tests
 
       - name: Run tests
