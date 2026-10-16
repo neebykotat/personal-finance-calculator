@@ -32,4 +32,4 @@ jobs:
         run: |
           cd /home/user/myapp
           source .venv/bin/activate
-          pytest tests/ -v
+          pytest -v
