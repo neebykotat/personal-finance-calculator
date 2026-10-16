@@ -22,9 +22,9 @@ def main():
             try:
                 amt = float(input("Сумма: "))
                 tracker.add_income(cat, amt)
-                print(f"✅ Доход в категорию '{cat}' успешно добавлен!")
+                print("✅ Доход в категорию '{}' успешно добавлен!".format(cat))
             except ValueError as e:
-                print(f"❌ Ошибка: {e}")
+                print("❌ Ошибка: {}".format(e))
 
         elif choice == "2":
             cat = input("Введите категорию расхода (например, Продукты, Фастфуд): ").strip()
@@ -33,21 +33,21 @@ def main():
                 result_message = tracker.add_expense(cat, amt)
                 print(result_message)
             except ValueError as e:
-                print(f"❌ Ошибка: {e}")
+                print("❌ Ошибка: {}".format(e))
 
         elif choice == "3":
-            print(f"\n📈 Всего заработано: {tracker.get_total_income()} руб.")
-            print(f"📉 Всего потрачено: {tracker.get_total_expense()} руб.")
-            print(f"💳 Текущий баланс: {tracker.get_balance()} руб.")
+            print("\n📈 Всего заработано: {} руб.".format(tracker.get_total_income()))
+            print("📉 Всего потрачено: {} руб.".format(tracker.get_total_expense()))
+            print("💳 Текущий баланс: {} руб.".format(tracker.get_balance()))
 
         elif choice == "4":
             cat = input("Для какой категории установить лимит?: ").strip()
             try:
                 amt = float(input("Введите сумму лимита: "))
                 tracker.set_limit(cat, amt)
-                print(f"🔒 Лимит для '{cat}' изменен на {amt} руб.")
+                print("🔒 Лимит для '{}' изменен на {} руб.".format(cat, amt))
             except ValueError as e:
-                print(f"❌ Ошибка: {e}")
+                print("❌ Ошибка: {}".format(e))
 
         elif choice == "5":
             print("👋 Программа завершена. Удачи в накоплениях!")
