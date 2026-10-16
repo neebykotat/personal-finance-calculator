@@ -36,7 +36,7 @@ class FinanceTracker:
         )
 
         if category in self.category_limits and current_category_spent > self.category_limits[category]:
-            return f"Внимание! Превышен лимит по категории '{category}'!"
+            return "Внимание! Превышен лимит по категории '{}'!".format(category)
         return "Расход успешно добавлен"
 
     def get_total_income(self) -> float:
