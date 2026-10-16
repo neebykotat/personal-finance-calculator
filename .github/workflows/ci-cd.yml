@@ -6,15 +6,24 @@ on:
       - main
 
 jobs:
-  test:
-    name: Run Pytest
+  build-and-deploy:
+    name: Test and Deploy
     runs-on: self-hosted
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - name: Update code via Git
+        run: |
+          cd /home/user
+
+          if [ ! -d "myapp" ]; then
+            git clone https://github.com myapp
+          else
+            cd myapp
+            git pull origin main
+          fi
 
       - name: Install dependencies
         run: |
+          cd /home/user/myapp
           python3 -m venv .venv
           source .venv/bin/activate
           pip install --upgrade pip
@@ -22,19 +31,6 @@ jobs:
 
       - name: Run tests
         run: |
+          cd /home/user/myapp
           source .venv/bin/activate
           pytest tests/ -v
-
-  deploy:
-    name: Deploy to Production
-    needs: test
-    runs-on: self-hosted
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Copy files to production folder
-        run: |
-          mkdir -p /home/user/myapp
-          cp -r main.py finance.py requirements.txt /home/user/myapp/
-          print("🚀 Деплой успешно завершен! Файлы обновлены в /home/user/myapp/")
