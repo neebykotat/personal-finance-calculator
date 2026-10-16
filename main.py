@@ -1,8 +1,9 @@
 from finance import FinanceTracker
 
+
 def main():
     tracker = FinanceTracker()
-    print("Ваш трекер личных финансов v2.0")
+    print("Ваш трекер личных финансов")
 
     tracker.set_limit("Фастфуд", 1500)
     print("* Установлен тестовый лимит на категорию 'Фастфуд': 1500 руб.")
@@ -18,7 +19,8 @@ def main():
         choice = input("Выберите действие (1-5): ")
 
         if choice == "1":
-            cat = input("Введите категорию дохода (например, Зарплата, Стипендия): ").strip()
+            msg = "Введите категорию дохода (например, Зарплата, Стипендия): "
+            cat = input(msg).strip()
             try:
                 amt = float(input("Сумма: "))
                 tracker.add_income(cat, amt)
@@ -27,7 +29,8 @@ def main():
                 print("❌ Ошибка: {}".format(e))
 
         elif choice == "2":
-            cat = input("Введите категорию расхода (например, Продукты, Фастфуд): ").strip()
+            msg = "Введите категорию расхода (например, Продукты, Фастфуд): "
+            cat = input(msg).strip()
             try:
                 amt = float(input("Сумма: "))
                 result_message = tracker.add_expense(cat, amt)
@@ -36,9 +39,15 @@ def main():
                 print("❌ Ошибка: {}".format(e))
 
         elif choice == "3":
-            print("\n📈 Всего заработано: {} руб.".format(tracker.get_total_income()))
-            print("📉 Всего потрачено: {} руб.".format(tracker.get_total_expense()))
-            print("💳 Текущий баланс: {} руб.".format(tracker.get_balance()))
+            print("\n📈 Всего заработано: {} руб.".format(
+                tracker.get_total_income()
+            ))
+            print("📉 Всего потрачено: {} руб.".format(
+                tracker.get_total_expense()
+            ))
+            print("💳 Текущий баланс: {} руб.".format(
+                tracker.get_balance()
+            ))
 
         elif choice == "4":
             cat = input("Для какой категории установить лимит?: ").strip()
