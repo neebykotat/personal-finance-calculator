@@ -11,20 +11,18 @@ jobs:
     runs-on: self-hosted
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - name: Install dependencies
         run: |
-          # На сервере Astra Linux мы используем системный python3
-          # Создаем и активируем локальное виртуальное окружение на сервере для тестов
           python3 -m venv .venv
           source .venv/bin/activate
+          pip install --upgrade pip
           pip install -r requirements.txt
 
       - name: Run tests
         run: |
           source .venv/bin/activate
-          # Запускаем pytest в папке нашего раннера
           pytest tests/ -v
 
   deploy:
@@ -33,14 +31,10 @@ jobs:
     runs-on: self-hosted
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - name: Copy files to production folder
         run: |
-          # Создаем "боевую" папку для приложения на сервере, если её нет
           mkdir -p /home/user/myapp
-          
-          # Копируем наши файлы из рабочей папки раннера в боевую директорию сервера
           cp -r main.py finance.py requirements.txt /home/user/myapp/
-          
-          print("Деплой успешно завершен! Файлы обновлены в /home/user/myapp/")
+          print("🚀 Деплой успешно завершен! Файлы обновлены в /home/user/myapp/")
