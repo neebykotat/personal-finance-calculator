@@ -1,8 +1,8 @@
 import pytest
 from finance import FinanceTracker
 
+
 def test_add_income_and_balance():
-    """Тест на правильное суммирование доходов -> увеличение баланса"""
     tracker = FinanceTracker()
     tracker.add_income("Зарплата", 50000)
     tracker.add_income("Стипендия", 5000)
@@ -11,7 +11,6 @@ def test_add_income_and_balance():
 
 
 def test_invalid_operations_raise_errors():
-    """Тест ввода отрицательных / нулевых сумм"""
     tracker = FinanceTracker()
     with pytest.raises(ValueError):
         tracker.add_income("Инвестиции", -100)
@@ -20,21 +19,17 @@ def test_invalid_operations_raise_errors():
 
 
 def test_category_limit_warning():
-    """Тест уведомлений о превышении лимита"""
     tracker = FinanceTracker()
     tracker.set_limit("Кафе", 2000)
 
-    # Всё норм
     status1 = tracker.add_expense("Кафе", 1200)
     assert "успешно добавлен" in status1
 
-    # Превышение
     status2 = tracker.add_expense("Кафе", 900)
     assert "Превышен лимит" in status2
 
 
 def test_history_filtering():
-    """Тест фильтра истории"""
     tracker = FinanceTracker()
     tracker.add_income("Зарплата", 1000)
     tracker.add_expense("Метро", 50)
