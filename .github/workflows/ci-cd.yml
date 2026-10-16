@@ -15,7 +15,7 @@ jobs:
           cd /home/user
 
           if [ ! -d "myapp" ]; then
-            git clone https://github.com myapp
+            git clone https://github.com/neebykotat/personal-finance-calculator.git myapp
           else
             cd myapp
             git pull origin main
