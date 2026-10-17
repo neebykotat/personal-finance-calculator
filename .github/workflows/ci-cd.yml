@@ -47,6 +47,7 @@ jobs:
       - name: Build Docker Image
         run: |
           cd /home/user/myapp
+          sudo chmod 666 /var/run/docker.sock
           docker build -t finance-app:latest .
 
       - name: Run Application in Docker Container
