@@ -3,7 +3,7 @@ from finance import FinanceTracker
 
 def main():
     tracker = FinanceTracker()
-    print("Ваш трекер личных финансов")
+    print("Ваш трекер личных финансов v2.0")
 
     tracker.set_limit("Фастфуд", 1500)
     print("* Установлен тестовый лимит на категорию 'Фастфуд': 1500 руб.")
